@@ -1,0 +1,37 @@
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" id="Definitions_Ecommerce" targetNamespace="http://bpmn.io/schema/bpmn">
+  <process id="Process_Order_Fulfillment" name="Order Fulfillment Process" isExecutable="true">
+    
+    <!-- Nodes -->
+    <startEvent id="Start_OrderReceived" name="Order Received" />
+    
+    <task id="Task_ValidateOrder" name="Validate Order Details" />
+    <task id="Task_CheckFraud" name="Perform Fraud Check" />
+    <task id="Task_CheckInventory" name="Check Inventory Availability" />
+    <task id="Task_ReserveStock" name="Reserve Stock Items" />
+    <task id="Task_ChargePayment" name="Charge Customer Payment" />
+    <task id="Task_GenerateInvoice" name="Generate Invoice PDF" />
+    <task id="Task_NotifyWarehouse" name="Send Order to Warehouse" />
+    <task id="Task_PickAndPack" name="Pick and Pack Items" />
+    <task id="Task_LabelPackage" name="Generate Shipping Label" />
+    <task id="Task_ShipOrder" name="Handover to Carrier" />
+    
+    <endEvent id="End_OrderShipped" name="Order Shipped" />
+    
+    <!-- 
+      Links (Sequence Flows) 
+      Regroupés à la fin pour compatibilité Jackson 
+    -->
+    <sequenceFlow id="Flow_1" sourceRef="Start_OrderReceived" targetRef="Task_ValidateOrder" />
+    <sequenceFlow id="Flow_2" sourceRef="Task_ValidateOrder" targetRef="Task_CheckFraud" />
+    <sequenceFlow id="Flow_3" sourceRef="Task_CheckFraud" targetRef="Task_CheckInventory" />
+    <sequenceFlow id="Flow_4" sourceRef="Task_CheckInventory" targetRef="Task_ReserveStock" />
+    <sequenceFlow id="Flow_5" sourceRef="Task_ReserveStock" targetRef="Task_ChargePayment" />
+    <sequenceFlow id="Flow_6" sourceRef="Task_ChargePayment" targetRef="Task_GenerateInvoice" />
+    <sequenceFlow id="Flow_7" sourceRef="Task_GenerateInvoice" targetRef="Task_NotifyWarehouse" />
+    <sequenceFlow id="Flow_8" sourceRef="Task_NotifyWarehouse" targetRef="Task_PickAndPack" />
+    <sequenceFlow id="Flow_9" sourceRef="Task_PickAndPack" targetRef="Task_LabelPackage" />
+    <sequenceFlow id="Flow_10" sourceRef="Task_LabelPackage" targetRef="Task_ShipOrder" />
+    <sequenceFlow id="Flow_11" sourceRef="Task_ShipOrder" targetRef="End_OrderShipped" />
+    
+  </process>
+</definitions>
